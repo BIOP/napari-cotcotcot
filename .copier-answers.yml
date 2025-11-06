@@ -1,0 +1,18 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v2.0.0
+_src_path: https://github.com/napari/napari-plugin-template
+display_name: Cotcotcot
+email: romain.guiet@epfl.ch
+full_name: Romain Guiet
+github_repository_url: provide later
+github_username_or_organization: romainGuiet
+include_reader_plugin: true
+include_sample_data_plugin: true
+include_widget_plugin: true
+include_writer_plugin: true
+install_dependabot: true
+install_precommit: true
+license: BSD-3
+module_name: napari_cotcotcot
+plugin_name: napari-cotcotcot
+short_description: A simple napari plugin to use cotracker3 for tracking
