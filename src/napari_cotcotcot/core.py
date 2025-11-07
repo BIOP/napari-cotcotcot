@@ -370,7 +370,8 @@ def visualize_seed_layer_results(
 
     track_id_offset = 0
 
-    for result in enumerate(results):
+    for seed_idx, result in enumerate(results):
+        print(f"Visualizing segment {seed_idx+1}/{len(results)}")
         tracks = result["tracks"][0].cpu().numpy()
         visibility = result["visibility"][0].cpu().numpy()
         shape_type = result["shape_type"]
