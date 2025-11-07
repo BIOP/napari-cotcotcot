@@ -1,0 +1,31 @@
+[workspace]
+authors = ["romainGuiet <romain.guiet@epfl.ch>"]
+channels = ["ome" , "conda-forge"]
+name = "cotcotcot"
+platforms = ["win-64"]
+version = "0.1.0"
+
+
+[system-requirements]
+cuda = "12.0"
+
+[dependencies]
+pytorch-gpu = "*"
+zeroc-ice36-python = "*"
+omero-py = "*"
+ipykernel = "*"
+notebook = "*"
+napari = "*"
+pyqt = "*"
+napari-ome-zarr = "*"
+ome-zarr = "*"
+napari-omero = "*"
+pillow = "*"
+matplotlib = "*"
+imageio = "*"
+tifffile = "*"
+
+[pypi-dependencies]
+cotracker = { git = "https://github.com/facebookresearch/co-tracker.git"}
+napari-cotcotcot = { git = "https://github.com/BIOP/napari-cotcotcot.git"}
+opencv-python = "*"
