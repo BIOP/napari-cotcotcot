@@ -1,5 +1,5 @@
 name: napari-cotcotcot
-display_name: Cotcotcot
+display_name: cotcotcot
 # use 'hidden' to remove plugin from napari hub search results
 visibility: public
 # see https://napari.org/stable/plugins/technical_references/manifest.html#fields for valid categories
@@ -8,50 +8,32 @@ contributions:
   commands:
     - id: napari-cotcotcot.get_reader
       python_name: napari_cotcotcot._reader:napari_get_reader
-      title: Open data with Cotcotcot
-    - id: napari-cotcotcot.write_multiple
-      python_name: napari_cotcotcot._writer:write_multiple
-      title: Save multi-layer data with Cotcotcot
-    - id: napari-cotcotcot.write_single_image
-      python_name: napari_cotcotcot._writer:write_single_image
-      title: Save image data with Cotcotcot
+      title: Open data with CoTracker
+    - id: napari-cotcotcot.write_image
+      python_name: napari_cotcotcot._writer:napari_write_image
+      title: Save image data with CoTracker
     - id: napari-cotcotcot.make_sample_data
       python_name: napari_cotcotcot._sample_data:make_sample_data
-      title: Load sample data from Cotcotcot
-    - id: napari-cotcotcot.make_container_widget
-      python_name: napari_cotcotcot:ImageThreshold
-      title: Make threshold Container widget
-    - id: napari-cotcotcot.make_magic_widget
-      python_name: napari_cotcotcot:threshold_magic_widget
-      title: Make threshold magic widget
-    - id: napari-cotcotcot.make_function_widget
-      python_name: napari_cotcotcot:threshold_autogenerate_widget
-      title: Make threshold function widget
-    - id: napari-cotcotcot.make_qwidget
-      python_name: napari_cotcotcot:ExampleQWidget
-      title: Make example QWidget
+      title: Load sample data from CoTracker
+    - id: napari-cotcotcot.cotracker_widget
+      python_name: napari_cotcotcot._widget:cotracker_widget
+      title: CoTracker Control Panel
+
   readers:
     - command: napari-cotcotcot.get_reader
       accepts_directories: false
-      filename_patterns: ['*.npy']
+      filename_patterns: ['*.tif', '*.tiff']
+
   writers:
-    - command: napari-cotcotcot.write_multiple
-      layer_types: ['image*','labels*']
-      filename_extensions: []
-    - command: napari-cotcotcot.write_single_image
+    - command: napari-cotcotcot.write_image
       layer_types: ['image']
-      filename_extensions: ['.npy']
+      filename_extensions: ['.tif', '.tiff']
+
   sample_data:
     - command: napari-cotcotcot.make_sample_data
-      display_name: Cotcotcot
+      display_name: CoTracker sample
       key: unique_id.1
+
   widgets:
-    - command: napari-cotcotcot.make_container_widget
-      display_name: Container Threshold
-    - command: napari-cotcotcot.make_magic_widget
-      display_name: Magic Threshold
-    - command: napari-cotcotcot.make_function_widget
-      autogenerate: true
-      display_name: Autogenerate Threshold
-    - command: napari-cotcotcot.make_qwidget
-      display_name: Example QWidget
+    - command: napari-cotcotcot.cotracker_widget
+      display_name: CoTracker Control Panel
