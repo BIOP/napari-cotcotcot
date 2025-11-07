@@ -71,7 +71,7 @@ class CoTrackerWidget(QWidget):
         self.setLayout(layout)
 
         # Title
-        title = Label(value="<h2>CoTracker Control Panel</h2>")
+        title = Label(value="<h2>Cot Cot Cot</h2>")
         layout.addWidget(title.native)
 
         # Image selection section
@@ -126,16 +126,6 @@ class CoTrackerWidget(QWidget):
         self.load_seed_btn = PushButton(text="Load Seed Layer from CSV")
         self.load_seed_btn.clicked.connect(self._load_seed_from_csv)
         layout.addWidget(self.load_seed_btn.native)
-
-        # Seed layers list
-        self.seed_list = ComboBox(label="Active Seed Layers", choices=[])
-        self.refresh_seeds_btn = PushButton(text="Refresh List")
-        self.refresh_seeds_btn.clicked.connect(self._refresh_seed_list)
-
-        seed_list_layout = QHBoxLayout()
-        seed_list_layout.addWidget(self.seed_list.native)
-        seed_list_layout.addWidget(self.refresh_seeds_btn.native)
-        layout.addLayout(seed_list_layout)
 
         # Time navigation section
         layout.addWidget(Label(value="<b>Time Navigation:</b>").native)
@@ -194,6 +184,16 @@ class CoTrackerWidget(QWidget):
 
         # Tracking actions section
         layout.addWidget(Label(value="<b>4. Run Tracking:</b>").native)
+
+        # Seed layers list
+        self.seed_list = ComboBox(label="Active Seed Layers", choices=[])
+        self.refresh_seeds_btn = PushButton(text="Refresh List")
+        self.refresh_seeds_btn.clicked.connect(self._refresh_seed_list)
+
+        seed_list_layout = QHBoxLayout()
+        seed_list_layout.addWidget(self.seed_list.native)
+        seed_list_layout.addWidget(self.refresh_seeds_btn.native)
+        layout.addLayout(seed_list_layout)
 
         # Track single layer
         self.track_single_btn = PushButton(text="Track Selected Seed Layer")
