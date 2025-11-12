@@ -56,7 +56,9 @@ dev = [
 [project.entry-points."napari.manifest"]
 napari-cotcotcot = "napari_cotcotcot:napari.yaml"
 
-
+# to enable command line interface
+[project.scripts]
+naparicot = "napari_cotcotcot:main"
 
 [build-system]
 requires = ["setuptools>=42.0.0", "setuptools_scm"]
