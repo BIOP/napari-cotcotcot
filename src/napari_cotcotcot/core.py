@@ -6,6 +6,7 @@ import napari
 import numpy as np
 import tifffile
 import torch
+from PIL import Image
 from tqdm import tqdm
 
 # Initialize device
@@ -763,3 +764,77 @@ def export_all_centers_to_csv(
         print(f"Exported {len(data)} center positions to {filename}")
     else:
         print("No tracking results to export!")
+
+
+def export_animated_gif(
+    viewer: napari.Viewer,
+    output_path: str,
+    fps: int = 10,
+) -> None:
+    """
+    Export the current viewer state as an animated GIF.
+    
+    Args:
+        viewer: Napari viewer instance
+        output_path: Path to save the GIF file
+        fps: Frames per second for the animation
+    """
+    from qtpy.QtCore import QSize
+    from qtpy.QtGui import QImage
+    import numpy as np
+    
+    # Get the current time range
+    if viewer.dims.ndim < 2:
+        raise ValueError("No time dimension found in viewer")
+    
+    # Assuming time is the first dimension
+    n_frames = int(viewer.dims.range[0][1])  # Convert to int here
+    if n_frames <= 1:
+        raise ValueError("Need at least 2 frames to create an animation")
+    
+    current_step = viewer.dims.current_step[0]
+    frames = []
+    
+    print(f"Exporting {n_frames} frames to animated GIF...")
+    
+    # Capture each frame
+    for t in tqdm(range(n_frames), desc="Capturing frames"):
+        # Set the time point
+        viewer.dims.current_step = (t, *viewer.dims.current_step[1:])
+        
+        # Force update of the viewer
+        viewer.window.qt_viewer.canvas.native.update()
+        viewer.window.qt_viewer.canvas.native.repaint()
+        
+        # Capture the current view
+        screenshot = viewer.screenshot(canvas_only=True, flash=False)
+        
+        # Convert to PIL Image
+        if screenshot.ndim == 3:
+            # RGB or RGBA
+            if screenshot.shape[2] == 4:
+                # Convert RGBA to RGB
+                rgb_image = screenshot[:, :, :3]
+                alpha = screenshot[:, :, 3:4] / 255.0
+                white_bg = np.ones_like(rgb_image) * 255
+                screenshot = (rgb_image * alpha + white_bg * (1 - alpha)).astype(np.uint8)
+            else:
+                screenshot = screenshot
+        
+        pil_image = Image.fromarray(screenshot)
+        frames.append(pil_image)
+    
+    # Restore original time point
+    viewer.dims.current_step = (int(current_step), *viewer.dims.current_step[1:])  # Also convert to int here
+    
+    # Save as animated GIF
+    duration = int(1000 / fps)  # Duration in milliseconds
+    frames[0].save(
+        output_path,
+        save_all=True,
+        append_images=frames[1:],
+        duration=duration,
+        loop=0  # Infinite loop
+    )
+    
+    print(f"Animated GIF saved to: {output_path}")

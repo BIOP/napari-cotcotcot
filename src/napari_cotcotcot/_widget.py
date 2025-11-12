@@ -6,7 +6,9 @@ to track objects in time-lapse images using seed points.
 """
 
 import os
+from pathlib import Path
 from typing import TYPE_CHECKING
+
 
 import numpy as np
 import pandas as pd
@@ -19,6 +21,7 @@ from magicgui.widgets import (
     SpinBox,
 )
 from napari.utils.notifications import show_error, show_info
+
 from qtpy.QtWidgets import (
     QColorDialog,
     QFileDialog,
@@ -38,6 +41,7 @@ from .core import (
     prepare_images_for_tracking,
     track_all_seed_layers,
     track_seed_layer,
+    export_animated_gif
 )
 
 
@@ -206,6 +210,63 @@ class CoTrackerWidget(QWidget):
         self.track_all_btn.clicked.connect(self._track_all_layers)
         self.track_all_btn.enabled = False
         layout.addWidget(self.track_all_btn.native)
+
+        # Export GIF button
+        # Separator
+        layout.addWidget(Label(value="<hr>").native)
+
+        # Export movie section
+        layout.addWidget(Label(value="<b>5. Export Movie:</b>").native)
+
+        # Export settings layout
+        export_layout = QVBoxLayout()
+
+        # File path selection
+        path_layout = QHBoxLayout()
+        self.export_path_input = LineEdit(
+            value=str(Path.home() / "napari_movie.gif"),
+            label="Save to:"
+        )
+        self.export_browse_btn = PushButton(text="Browse...")
+        self.export_browse_btn.clicked.connect(self._browse_export_path)
+
+        path_layout.addWidget(Label(value="Save to:").native)
+        path_layout.addWidget(self.export_path_input.native)
+        path_layout.addWidget(self.export_browse_btn.native)
+        export_layout.addLayout(path_layout)
+
+        # File name input
+        name_layout = QHBoxLayout()
+        self.export_name_input = LineEdit(
+            value="napari_movie",
+            label="File name:"
+        )
+        name_layout.addWidget(Label(value="File name:").native)
+        name_layout.addWidget(self.export_name_input.native)
+        name_layout.addWidget(Label(value=".gif").native)
+        export_layout.addLayout(name_layout)
+
+        # Export options
+        options_layout = QHBoxLayout()
+        self.fps_spinbox = SpinBox(
+            label="FPS",
+            value=10,
+            min=1,
+            max=60,
+            step=1
+        )
+        options_layout.addWidget(Label(value="FPS:").native)
+        options_layout.addWidget(self.fps_spinbox.native)
+        export_layout.addLayout(options_layout)
+
+        self.export_name_input.changed.connect(self._update_export_path)
+
+        # Export button
+        self.export_gif_btn = PushButton(text="Export Animated GIF")
+        self.export_gif_btn.clicked.connect(self._export_gif)
+        export_layout.addWidget(self.export_gif_btn.native)
+
+        layout.addLayout(export_layout)
 
         # Status
         layout.addWidget(Label(value="<hr>").native)
@@ -701,6 +762,69 @@ class CoTrackerWidget(QWidget):
             self.status_label.value = (
                 f"<i style='color: red;'>Error: {str(e)}</i>"
             )
+
+    def _browse_export_path(self):
+        """Open dialog to select export directory."""
+        directory = QFileDialog.getExistingDirectory(
+            self,
+            "Select Export Directory",
+            str(Path.home()),
+        )
+
+        if directory:
+            # Update the path input with the selected directory
+            current_name = self.export_name_input.value
+            self.export_path_input.value = str(Path(directory) / f"{current_name}.gif")
+
+
+    def _export_gif(self):
+        """Export current view as animated GIF."""
+        try:
+            # Get the full path
+            directory = os.path.dirname(self.export_path_input.value)
+            filename = self.export_name_input.value
+            
+            if not filename:
+                show_error("Please enter a file name!")
+                return
+            
+            # Ensure .gif extension
+            if not filename.endswith('.gif'):
+                filename += '.gif'
+            
+            full_path = os.path.join(directory, filename)
+            
+            # Check if directory exists
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+            
+            # Update status
+            self.status_label.value = "<i>Exporting animated GIF...</i>"
+            
+            # Import the export function
+            from .core import export_animated_gif
+            
+            # Export the GIF
+            export_animated_gif(
+                self.viewer,
+                full_path,
+                fps=self.fps_spinbox.value
+            )
+            
+            self.status_label.value = f"<i>GIF exported to: {full_path}</i>"
+            show_info(f"Animated GIF saved to: {full_path}")
+            
+        except (ValueError, RuntimeError, OSError) as e:
+            show_error(f"Error exporting GIF: {str(e)}")
+            self.status_label.value = f"<i style='color: red;'>Export error: {str(e)}</i>"
+
+    def _update_export_path(self):
+        """Update the full export path when filename changes."""
+        directory = os.path.dirname(self.export_path_input.value)
+        filename = self.export_name_input.value
+        if filename and not filename.endswith('.gif'):
+            filename += '.gif'
+        self.export_path_input.value = os.path.join(directory, filename)
 
 
 # Then create an alias with the exact name napari is looking for:
