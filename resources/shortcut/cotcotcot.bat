@@ -1,4 +1,4 @@
 @echo off
 cd /d "D:\pixi\cotcotcot"
-pixi run napari
+pixi run naparicot
 pause
