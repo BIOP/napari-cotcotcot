@@ -7,11 +7,6 @@ import pandas as pd
 from skimage.io import imread
 from napari.types import LayerData
 
-try:
-    from urllib.request import urlretrieve
-except ImportError:
-    from urllib import urlretrieve
-
 def _load_seed_from_csv_standalone(csv_path: str) -> np.ndarray:
     """Standalone function to load seed points from CSV file."""
     df = pd.read_csv(csv_path)
