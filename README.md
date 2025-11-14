@@ -116,7 +116,11 @@ If napari is not already installed, you can install `napari-cotcotcot` with napa
 pip install "napari-cotcotcot[all]"
 ```
 
-##
+## How can I create a shortcut on my desktop to start cotcotcot
+
+If you're using Windows, you can use (or modify to fit your insatallation) the  [cotcotcot.bat](resources/shortcut/cotcotcot.bat) and the official [cotcotcot icon](resources/logo/cotcotcot_icon.ico).
+
+![](resources/logo/icon.png)
 
 
 ## Contributing
