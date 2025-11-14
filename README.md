@@ -9,21 +9,38 @@
 [![npe2](https://img.shields.io/badge/plugin-npe2-blue?link=https://napari.org/stable/plugins/index.html)](https://napari.org/stable/plugins/index.html)
 [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-purple.json)](https://github.com/copier-org/copier)
 
-A simple napari plugin to use cotracker3 for tracking
+# napari-cotcotcot
 
-----------------------------------
+![main](resources/logo/github_card.png)
 
-This [napari] plugin was generated with [copier] using the [napari-plugin-template] (None).
+A simple napari plugin to use CoTracker3 for tracking !
 
-<!--
-Don't miss the full getting started guide to set up your new package:
-https://github.com/napari/napari-plugin-template#getting-started
 
-and review the napari docs for plugin developers:
-https://napari.org/stable/plugins/index.html
--->
+| | | 
+| --- | --- | 
+| ![input](src/napari_cotcotcot/data/Gallus_gallus_domesticus/chicken-run.gif) | ![output](src/napari_cotcotcot/data/Gallus_gallus_domesticus/cotcotcot_output-small.gif) | 
+
+## Why naming it cotcotcot ? 
+
+We make use CoTracker, which can be obviously simplifide to cot, and the version is CoTracker3, therefore **cotcotcot**
+
+# Test cotcotcot example !
+
+
+
+
+
 
 ## Installation
+
+### Using pixi
+
+```
+
+```
+
+
+### SOON : 
 
 You can install `napari-cotcotcot` via [pip]:
 
@@ -52,6 +69,11 @@ Distributed under the terms of the [BSD-3] license,
 ## Issues
 
 If you encounter any problems, please [file an issue] along with a detailed description.
+
+----------------------------------
+
+This [napari] plugin was generated with [copier] using the [napari-plugin-template] 
+
 
 [napari]: https://github.com/napari/napari
 [copier]: https://copier.readthedocs.io/en/stable/
