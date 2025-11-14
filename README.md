@@ -9,11 +9,9 @@
 [![npe2](https://img.shields.io/badge/plugin-npe2-blue?link=https://napari.org/stable/plugins/index.html)](https://napari.org/stable/plugins/index.html)
 [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-purple.json)](https://github.com/copier-org/copier)
 
-# napari-cotcotcot
-
 ![main](resources/logo/github_card.png)
 
-A simple napari plugin to use CoTracker3 for tracking !
+A simple napari plugin to use [CoTracker] for tracking !
 
 
 | | | 
@@ -22,51 +20,44 @@ A simple napari plugin to use CoTracker3 for tracking !
 
 ## Why naming it cotcotcot ? 
 
-We make use of [CoTracker](https://github.com/facebookresearch/co-tracker), which can be obviously shorten to *cot*, and it's the version 3, therefore **cotcotcot**! 
+We make use of [CoTracker], which can be obviously shorten to *cot*, and it's the version 3, therefore **cotcotcot**! 
 
 _Plus, look at this cute chicken above !_
 
-# How to use cotcotcot?
+## How to use cotcotcot?
 
-After [installing]() napari-cotcotcot.
+After [installing](https://github.com/BIOP/napari-cotcotcot?tab=readme-ov-file#how-to-install-cotcotcot-) napari-cotcotcot.
 
-Type in your terminal : 
+- Type in your terminal : 
 ```
 naparicot
 ```
-
-to start napari with the plugin already open
-
+... to start napari with the plugin already open
 ![napari open](resources/tuto/1-naparicot.png)
-
-Go to `File > Open Sample > CoTracker sample (cotcotcot)`
-![](resources/tuto/2-OpenSample.png)
-
-To get and an example image to test
-![](resources/tuto/3-DataOpen.png)
-
-Click on the `Track Selected Seed Layer` button to start processing and get new layers!
-
 (_CoTracker3 model should be downlaod the first time, it might take some time, please check your terminal to see progress_) 
 
-![](resources/tuto/4-TrackingResult-1.png)
+- Go to `File > Open Sample > CoTracker sample (cotcotcot)`
+![2](resources/tuto/2-OpenSample.png)
+...to get and an example image to test
+![3](resources/tuto/3-DataOpen.png)
 
-One can add one more seed layer
-![](resources/tuto/5-AddSeedLayer.png)
+- Click on the `Track Selected Seed Layer` button to start processing and get new layers!
+![4](resources/tuto/4-TrackingResult-1.png)
 
-and add seed points (at least 2 , definig start and end of the tracking)
-![](resources/tuto/6-AddPoints.png)
+- Add one more seed layer
+![5](resources/tuto/5-AddSeedLayer.png)
+...and add seed points (at least 2 , definig start and end of the tracking)
+![6](resources/tuto/6-AddPoints.png)
 
-One can also change tracked-shape specifications (reactangle/disk , size, number of points inside)
-![](resources/tuto/7-ChangeShape.png)
+- Change tracked shape specifications (reactangle/disk , size, number of points inside)
+![7](resources/tuto/7-ChangeShape.png)
 
-And use the `Track All Seed Layers` button 
+- Use the `Track All Seed Layers` button. (or select the layer to track in the drop-down menu and use the `Track Selected Seed Layer` button to avoid recomputing the first track)
+![8](resources/tuto/8-TrackAll.png)
 
-(or select layer to track and use the `Track Selected Seed Layer` button to avoid recomputing the first track)
-
-![](resources/tuto/8-TrackAll.png)
-
-Finally, one can use the `Export Animated GIF` button, or select a layer of interest and use `File > Save Selected Layers...` to export coordinates of the center of the tracked-shape.
+Finally, one can use :
+- the `Export Animated GIF` button 
+- Select a layer of interest and use `File > Save Selected Layers...` to export coordinates of the center of the tracked-shape.
 
 ## How to install cotcotcot ? 
 
@@ -125,6 +116,7 @@ If napari is not already installed, you can install `napari-cotcotcot` with napa
 pip install "napari-cotcotcot[all]"
 ```
 
+##
 
 
 ## Contributing
@@ -161,3 +153,5 @@ This [napari] plugin was generated with [copier] using the [napari-plugin-templa
 [tox]: https://tox.readthedocs.io/en/latest/
 [pip]: https://pypi.org/project/pip/
 [PyPI]: https://pypi.org/
+
+[CoTracker]: https://github.com/facebookresearch/co-tracker
