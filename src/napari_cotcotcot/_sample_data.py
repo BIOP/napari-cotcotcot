@@ -8,7 +8,24 @@ from skimage.io import imread
 from napari.types import LayerData
 
 def _load_seed_from_csv_standalone(csv_path: str) -> np.ndarray:
-    """Standalone function to load seed points from CSV file."""
+    """
+    Load seed points from a CSV file.
+
+    Parameters
+    ----------
+    csv_path : str
+        Path to the CSV file containing seed point coordinates.
+
+    Returns
+    -------
+    np.ndarray
+        Array of shape (n_points, 3) containing seed point coordinates.
+
+    Raises
+    ------
+    ValueError
+        If the CSV format is invalid (missing required columns).
+    """
     df = pd.read_csv(csv_path)
 
     required_cols = ["axis-0", "axis-1", "axis-2"]
