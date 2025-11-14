@@ -38,11 +38,32 @@ def _load_seed_from_csv_standalone(csv_path: str) -> np.ndarray:
     return df[["axis-0", "axis-1", "axis-2"]].values
 
 def load_sample_data() -> List[LayerData]:
-    """Load sample data for demonstration."""
-    # TODO: make it work with local path as well
-    # so far issue with gif loading in napari from local path, hence using URL
-    # data_path = Path(__file__).parent / "data" / "Gallus_gallus_domesticus" / "chicken-run.gif"
+    """
+    Loads sample data for demonstration in napari.
 
+    This function loads:
+        - A GIF image ("chicken-run.gif") from a remote URL:
+          https://raw.githubusercontent.com/BIOP/napari-cotcotcot/refs/heads/main/src/napari_cotcotcot/data/Gallus_gallus_domesticus/chicken-run.gif
+        - Seed points from a local CSV file ("seed_Chicken1.csv") if available at:
+          <package_dir>/data/Gallus_gallus_domesticus/seed_Chicken1.csv
+
+    Returns
+    -------
+    List[LayerData]
+        A list of tuples (data, metadata, layer_type) suitable for napari, where:
+            - The first tuple contains the image data, metadata with name "cotcotcot", and layer_type "image".
+            - The second tuple (if CSV is found and loaded) contains the seed points, metadata with name "seed_Chicken1", and layer_type "points".
+
+    Data Sources
+    -----------
+    - GIF image: downloaded from the above URL.
+    - Seed points: loaded from a local CSV file.
+
+    Exceptions
+    ----------
+    - If the CSV file is missing, empty, or malformed, an error is printed and only the image is returned.
+    - If the GIF image cannot be downloaded or read, an exception may be raised by skimage.io.imread.
+    """
     URL = "https://raw.githubusercontent.com/BIOP/napari-cotcotcot/refs/heads/main/src/napari_cotcotcot/data/Gallus_gallus_domesticus/chicken-run.gif"
     print(f"Downloading sample data from {URL}...")
     gif_data = imread(URL)
