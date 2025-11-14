@@ -22,25 +22,96 @@ A simple napari plugin to use CoTracker3 for tracking !
 
 ## Why naming it cotcotcot ? 
 
-We make use CoTracker, which can be obviously simplifide to cot, and the version is CoTracker3, therefore **cotcotcot**
+We make use of [CoTracker](https://github.com/facebookresearch/co-tracker), which can be obviously shorten to *cot*, and it's the version 3, therefore **cotcotcot**! 
 
-# Test cotcotcot example !
+_Plus, look at this cute chicken above !_
 
+# How to use cotcotcot?
 
+After [installing]() napari-cotcotcot.
 
+Type in your terminal : 
+```
+naparicot
+```
 
+to start napari with the plugin already open
 
+![napari open](resources/tuto/1-naparicot.png)
 
-## Installation
+Go to `File > Open Sample > CoTracker sample (cotcotcot)`
+![](resources/tuto/2-OpenSample.png)
+
+To get and an example image to test
+![](resources/tuto/3-DataOpen.png)
+
+Click on the `Track Selected Seed Layer` button to start processing and get new layers!
+
+(_CoTracker3 model should be downlaod the first time, it might take some time, please check your terminal to see progress_) 
+
+![](resources/tuto/4-TrackingResult-1.png)
+
+One can add one more seed layer
+![](resources/tuto/5-AddSeedLayer.png)
+
+and add seed points (at least 2 , definig start and end of the tracking)
+![](resources/tuto/6-AddPoints.png)
+
+One can also change tracked-shape specifications (reactangle/disk , size, number of points inside)
+![](resources/tuto/7-ChangeShape.png)
+
+And use the `Track All Seed Layers` button 
+
+(or select layer to track and use the `Track Selected Seed Layer` button to avoid recomputing the first track)
+
+![](resources/tuto/8-TrackAll.png)
+
+Finally, one can use the `Export Animated GIF` button, or select a layer of interest and use `File > Save Selected Layers...` to export coordinates of the center of the tracked-shape.
+
+## How to install cotcotcot ? 
 
 ### Using pixi
 
+We recommend using [pixi](https://pixi.sh/latest/) ( _but similar python environment should be buildable using conda_)
+
+#### Create a pixi folder
 ```
+pixi init cotcotcot
+cd cotcotcot
+```
+#### Modify toml file
+
+Using a text editor replace the content of the `pixi.toml` file with 
 
 ```
+[workspace]
+authors = ["romainGuiet <romain.guiet@epfl.ch>"]
+channels = ["conda-forge"]
+name = "cotcotcot"
+platforms = ["win-64"]
+version = "0.1.0"
 
+[system-requirements]
+cuda = "12.0"
 
-### SOON : 
+[dependencies]
+pytorch-gpu = "*"
+napari = "*"
+pyqt = "*"
+tifffile = "*"
+
+[pypi-dependencies]
+cotracker = { git = "https://github.com/facebookresearch/co-tracker.git"}
+napari-cotcotcot = { git = "https://github.com/BIOP/napari-cotcotcot.git"}
+```
+then proceed with the installation using 
+
+```
+pixi install
+```
+You're done! 
+
+### SOON ? : 
 
 You can install `napari-cotcotcot` via [pip]:
 
