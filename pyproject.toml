@@ -35,8 +35,8 @@ dependencies = [
     "pandas",
     "tqdm",
     "tifffile",
-    "napari",  # Add this since your plugin is for napari
-    "torch",  # See note below about PyTorch
+    "napari",  
+    "torch", 
 ]
 
 [project.optional-dependencies]
@@ -56,7 +56,7 @@ dev = [
 [project.entry-points."napari.manifest"]
 napari-cotcotcot = "napari_cotcotcot:napari.yaml"
 
-# to enable command line interface
+# to enable command line interface, starting rom terminal with naparicot
 [project.scripts]
 naparicot = "napari_cotcotcot:main"
 
@@ -72,6 +72,8 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "*" = ["*.yaml"]
+# to enable package data inclusion
+"napari_cotcotcot" = ["/data/Gallus_gallus_domesticus/chicken-run.gif" , "/data/Gallus_gallus_domesticus/seed_Chicken1.csv" ]
 
 [tool.setuptools_scm]
 write_to = "src/napari_cotcotcot/_version.py"
