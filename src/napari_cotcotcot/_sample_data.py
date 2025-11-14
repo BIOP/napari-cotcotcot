@@ -66,11 +66,13 @@ def load_sample_data() -> List[LayerData]:
     """
     URL = "https://raw.githubusercontent.com/BIOP/napari-cotcotcot/refs/heads/main/src/napari_cotcotcot/data/Gallus_gallus_domesticus/chicken-run.gif"
     print(f"Downloading sample data from {URL}...")
-    gif_data = imread(URL)
-    print("Downloading completed!")
-
-    sample_datasets = [(gif_data, {"name": "cotcotcot"}, "image")]
-
+    try:
+        gif_data = imread(URL)
+        print("Downloading completed!")
+        sample_datasets = [(gif_data, {"name": "cotcotcot"}, "image")]
+    except (IOError, ValueError, Exception) as e:
+        print(f"Error downloading or reading image from {URL}: {e}")
+        sample_datasets = []
     # Load CSV
     csv_data_path = Path(__file__).parent / "data" / "Gallus_gallus_domesticus" / "seed_Chicken1.csv"
     if csv_data_path.exists():
