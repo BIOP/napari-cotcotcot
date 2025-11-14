@@ -6,31 +6,15 @@ visibility: public
 # categories: []
 contributions:
   commands:
-    - id: napari-cotcotcot.get_reader
-      python_name: napari_cotcotcot._reader:napari_get_reader
-      title: Open data with CoTracker
-    - id: napari-cotcotcot.write_image
-      python_name: napari_cotcotcot._writer:napari_write_image
-      title: Save image data with CoTracker
-    - id: napari-cotcotcot.make_sample_data
-      python_name: napari_cotcotcot._sample_data:make_sample_data
+    - id: napari-cotcotcot.load_sample_data
+      python_name: napari_cotcotcot._sample_data:load_sample_data
       title: Load sample data from CoTracker
     - id: napari-cotcotcot.cotracker_widget
       python_name: napari_cotcotcot._widget:cotracker_widget
       title: CoTracker Control Panel
 
-  readers:
-    - command: napari-cotcotcot.get_reader
-      accepts_directories: false
-      filename_patterns: ['*.tif', '*.tiff']
-
-  writers:
-    - command: napari-cotcotcot.write_image
-      layer_types: ['image']
-      filename_extensions: ['.tif', '.tiff']
-
   sample_data:
-    - command: napari-cotcotcot.make_sample_data
+    - command: napari-cotcotcot.load_sample_data
       display_name: CoTracker sample
       key: unique_id.1
 

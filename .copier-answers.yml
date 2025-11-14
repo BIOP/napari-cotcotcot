@@ -4,7 +4,7 @@ _src_path: https://github.com/napari/napari-plugin-template
 display_name: Cotcotcot
 email: romain.guiet@epfl.ch
 full_name: Romain Guiet
-github_repository_url: provide later
+github_repository_url: https://github.com/BIOP/napari-cotcotcot
 github_username_or_organization: romainGuiet
 include_reader_plugin: true
 include_sample_data_plugin: true

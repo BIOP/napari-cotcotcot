@@ -9,7 +9,7 @@ import os
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-
+import napari
 import numpy as np
 import pandas as pd
 from magicgui.widgets import (
@@ -292,6 +292,24 @@ class CoTrackerWidget(QWidget):
         # Auto-initialize if we have an image
         if self._get_image_layers():
             self.image_selector.value = self._get_image_layers()[0]
+        
+        # Auto-initialize seed manager if seed layers are already present
+        self._check_and_auto_initialize()
+
+    def _check_and_auto_initialize(self):
+        """Check for existing seed layers and auto-initialize if found."""
+        if self.seed_manager is None:
+            seed_like_layers = [
+                layer.name for layer in self.viewer.layers 
+                if isinstance(layer, napari.layers.Points) and 
+                (layer.name.startswith("seed_") or "seed" in layer.name.lower())
+            ]
+            
+            if seed_like_layers:
+                print(f"Auto-initializing seed manager on startup due to detected seed layers: {seed_like_layers}")
+                self._ensure_seed_manager_initialized()
+                self._refresh_seed_list()
+                self._check_enable_tracking()
 
     def _pick_custom_color(self):
         """Open color picker dialog for custom color selection."""
@@ -389,6 +407,20 @@ class CoTrackerWidget(QWidget):
     def _on_layer_change(self, event):
         """Handle layer changes in viewer."""
         self.image_selector.choices = self._get_image_layers()
+
+        # Auto-initialize seed manager if we detect seed layers but manager is None
+        if self.seed_manager is None:
+            # Check if there are any layers that look like seed layers
+            seed_like_layers = [
+                layer.name for layer in self.viewer.layers 
+                if isinstance(layer, napari.layers.Points) and 
+                (layer.name.startswith("seed_") or "seed" in layer.name.lower())
+            ]
+
+            if seed_like_layers:
+                print(f"Auto-initializing seed manager due to detected seed layers: {seed_like_layers}")
+                self._ensure_seed_manager_initialized()
+
         if self.seed_manager:
             self._refresh_seed_list()
             # Check if tracking buttons should be enabled
